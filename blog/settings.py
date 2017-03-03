@@ -26,8 +26,6 @@ SECRET_KEY = '!s_a6a27(s93%l56t-g74u0g)v*!=8(t_1(w2q%p3qjsjmj^f='
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'blogpost'
 ]
 
 MIDDLEWARE = [
