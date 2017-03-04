@@ -20,10 +20,14 @@ from django.contrib import admin
 #In Python regular expressions, the syntax for named regular-expression
 # groups is (?P<name>pattern), where name is the name of the group and pattern is
 # some pattern to match.
+from blogpost import views as blogpostViews
+
+
 urlpatterns = [
-    '',(r'^$','blogpost.views.index'),
-    url(r'^blog/(?P<slug>[^\.]+).html','blogpost.views.view_post',name='view_blog_post'),
+    url(r'^$',blogpostViews.index),
+
     url(r'^admin/',include(admin.site.urls)),
+    url(r'^blog/(?P<slug>[^\.]+).html', blogpostViews.view_post, name='view_blog_post')
 ]
 #name:passing extra aarguments to view functions
 #include:chops off whatever part of the url matched uup to that point
