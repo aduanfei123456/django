@@ -21,14 +21,20 @@ from django.contrib import admin
 # groups is (?P<name>pattern), where name is the name of the group and pattern is
 # some pattern to match.
 from blogpost import views as blogpostViews
-
-
+from django.contrib.auth.models import User
+from rest_framework import routers
+from blogpost.api import BlogpostSet
+apiRouter=routers.DefaultRouter()
+apiRouter.register(r'blogpost',BlogpostSet)
 urlpatterns = [
+    url(r'^api_auth/',include('rest_framework.urls',namespace='rest_framework')),
+    url(r'^api/',include(apiRouter.urls)),
     url(r'^$',blogpostViews.index),
-
+    url(r'^pages/',include('django.contrib.flatpages.urls')),
     url(r'^admin/',include(admin.site.urls)),
-    url(r'^blog/(?P<slug>[^\.]+).html', blogpostViews.view_post, name='view_blog_post')
-]
+    url(r'^blog/(?P<slug>[^\.]+).html', blogpostViews.view_post, name='view_blog_post'),
+    url(r'^comments/',include('django_comments.urls'))
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 #name:passing extra aarguments to view functions
 #include:chops off whatever part of the url matched uup to that point
 #and sends the ramaining strring to the included URLconf for further processing

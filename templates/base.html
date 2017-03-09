@@ -4,12 +4,16 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <style type="text/css">
+        .masthead{
+        background-color:#5bc0de
+        }
+    </style>
     <title>{% block head_title %}Welcome to my blog{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 </head>
-<body data-twttr-rendered="true" class="bs-docs-home">
+< data-twttr-rendered="true" class="bs-docs-home">
 <header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
     <div class="container">
         <div class="navbar-header">
@@ -40,7 +44,7 @@
                         <input type="text" id="typeahead-input" class="form-control" placeholder="Search" name="search" data-provide="typeahead">
                         <div class="input-group-btn">
                             <button class="btn btn-default search-button" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                        </div>
+                        </div> 
                     </div>
                 </form>
             </div>
@@ -69,5 +73,24 @@
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/bootstrap3-typeahead.min.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
+<script>
+    $(document).ready(function(){
+    $('#typeaheaad-input').typeahead({
+        source:function(query,process){return $.get('api/blogpost/?format=json&title='+query,function(data){return
+         process(data);});},
+        updater:function(item){
+        return item;
+    },
+        displayText:function(item){
+        return item.title;
+
+    },
+        afterSelect:function(item){
+         location.href="http;//localhost:8000/blog/"+item.slug+'.html'
+    },
+    delay:500
+    });
+   });
+  </script>
 </body>
 </html>
