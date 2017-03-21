@@ -24,17 +24,21 @@ from blogpost import views as blogpostViews
 from django.contrib.auth.models import User
 from rest_framework import routers
 from blogpost.api import BlogpostSet
+from rest_framework_jwt import views as DRFViews
 apiRouter=routers.DefaultRouter()
 apiRouter.register(r'blogpost',BlogpostSet)
 urlpatterns = [
     url(r'^api_auth/',include('rest_framework.urls',namespace='rest_framework')),
     url(r'^api/',include(apiRouter.urls)),
-    url(r'^$',blogpostViews.index),
+    url(r'^$',blogpostViews.index,name='index'),
     url(r'^pages/',include('django.contrib.flatpages.urls')),
     url(r'^admin/',include(admin.site.urls)),
     url(r'^blog/(?P<slug>[^\.]+).html', blogpostViews.view_post, name='view_blog_post'),
-    url(r'^comments/',include('django_comments.urls'))
+    url(r'^comments/',include('django_comments.urls')),
+    url(r'^api-token-auth/',DRFViews.obtain_jwt_token),
+    url(r'^polls/',include('blogpost.urls')),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
 #name:passing extra aarguments to view functions
 #include:chops off whatever part of the url matched uup to that point
 #and sends the ramaining strring to the included URLconf for further processing

@@ -41,8 +41,10 @@ INSTALLED_APPS = [
     'corsheaders',
     'django.contrib.flatpages',
     'rest_framework',
+
     'blogpost'
 ]
+
 CORS_ALLOW_CREDENTIALS=True
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -136,5 +138,8 @@ STATICFILES_DIRS=[os.path.join(BASE_DIR,"static"), ]
 REST_FRAMEWORK={
     'DEFAULT_PERMISSION_CLASSES':[
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES':(
+      'rest_framework_jwt.authentication.JSONWebTokenAuthentication'
+    ),
 }
